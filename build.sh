@@ -64,7 +64,8 @@ echo "Base Image: ["$expanded_base_image"]"
 echo "Tag: ["$tag"]"
 echo "Proxy: ["$proxy"]"
 
-docker build . \
+DOCKER_BUILDKIT=1 docker build . \
     --build-arg BASE_IMAGE=${expanded_base_image} \
     --build-arg USE_APT_PROXY=${proxy} \
-    -t jsa1987/minidlna-yamaha-avr:$tag
+    -t jsa1987/minidlna-yamaha-avr:$tag \
+    --no-cache --pull --force-rm
