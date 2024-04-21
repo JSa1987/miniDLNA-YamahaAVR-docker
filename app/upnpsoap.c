@@ -1909,7 +1909,7 @@ SearchContentDirectory(struct upnphttp * h, const char * action)
 	where = parse_search_criteria(SearchCriteria, sep);
 	DPRINTF(E_DEBUG, L_HTTP, "Original translated SearchCriteria: %s\n", where);
 	char *start_REF_ID_NULL=strstr(where," and REF_ID is NULL");
-	char *end_REF_ID_NULL = tart_REF_ID_NULL + strlen(" and REF_ID is NULL");
+	char *end_REF_ID_NULL = start_REF_ID_NULL + strlen(" and REF_ID is NULL");
 	if (start_REF_ID_NULL!= NULL)
     {
 		memmove(start_REF_ID_NULL, end_REF_ID_NULL,strlen(end_REF_ID_NULL) + 1);

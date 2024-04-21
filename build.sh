@@ -67,4 +67,4 @@ echo "Proxy: ["$proxy"]"
 docker build . \
     --build-arg BASE_IMAGE=${expanded_base_image} \
     --build-arg USE_APT_PROXY=${proxy} \
-    -t JSa1987/minidlna-yamaha-avr:$tag
+    -t jsa1987/minidlna-yamaha-avr:$tag

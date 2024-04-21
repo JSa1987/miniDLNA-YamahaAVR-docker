@@ -32,6 +32,8 @@ RUN apt-get install libvorbis-dev -y
 RUN apt-get install libflac-dev -y
 RUN apt-get install gettext -y
 RUN apt-get install git -y
+RUN apt-get install wget -y
+RUN apt-get install build-essential -y
 #RUN apt-get install minidlna -y
 
 #RUN if [ "${USE_APT_PROXY}" = "Y" ]; then \
@@ -47,8 +49,16 @@ COPY LICENSE /app/doc
 
 WORKDIR /tmp
 RUN git clone git://git.code.sf.net/p/minidlna/git minidlna-git
-COPY /app/upnpsoap.c /tmp/
-WORKDIR /tmp
+WORKDIR /tmp/minidlna-git
+RUN cp upnpsoap.c upnpsoap.c_bk
+RUN rm upnpsoap.c
+COPY /app/upnpsoap.c /tmp/minidlna-git/upnpsoap.c
+#RUN wget https://github.com/JSa1987/miniDLNA-YamahaAVR-docker/blob/main/app/upnpsoap.c
+RUN ./autogen.sh
+RUN ./configure
+RUN make
+RUN make install
+#RUN checkinstall
 
 FROM scratch
 COPY --from=base / /
@@ -109,12 +119,7 @@ ENV MINIDLNA_FORCE_SORT_CRITERIA ""
 ENV PUID ""
 ENV PGID ""
 
-#COPY app/conf/album-art.conf.snippet /app/conf
-#COPY app/bin/run-minidlna.sh /app/bin/
-
-#WORKDIR /app/bin
-
-#ENTRYPOINT ["/app/bin/run-minidlna.sh"]
-
-
-
+COPY --chown=1000:1000 --chmod=555 app/conf/album-art.conf.snippet /app/conf
+COPY  --chown=1000:1000 --chmod=755 app/bin/run-minidlna.sh /app/bin/
+WORKDIR /app/bin
+ENTRYPOINT ["sh", "/app/bin/run-minidlna.sh"]
