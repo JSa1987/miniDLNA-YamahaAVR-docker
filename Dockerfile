@@ -122,4 +122,4 @@ ENV PGID ""
 COPY --chown=1000:1000 --chmod=555 app/conf/album-art.conf.snippet /app/conf
 COPY  --chown=1000:1000 --chmod=755 app/bin/run-minidlna.sh /app/bin/
 WORKDIR /app/bin
-ENTRYPOINT ["sh", "/app/bin/run-minidlna.sh"]
+ENTRYPOINT ["/app/bin/run-minidlna.sh"]
