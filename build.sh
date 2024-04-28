@@ -18,7 +18,7 @@ base_images[kinetic]=ubuntu:kinetic
 base_images[jammy]=ubuntu:jammy
 
 DEFAULT_BASE_IMAGE=stable
-DEFAULT_TAG=local
+DEFAULT_TAG=latest
 DEFAULT_USE_PROXY=N
 
 download=$DEFAULT_SOURCEFORGE_DOWNLOAD
@@ -64,7 +64,7 @@ echo "Base Image: ["$expanded_base_image"]"
 echo "Tag: ["$tag"]"
 echo "Proxy: ["$proxy"]"
 
-DOCKER_BUILDKIT=1 docker build . \
+docker buildx build . \
     --build-arg BASE_IMAGE=${expanded_base_image} \
     --build-arg USE_APT_PROXY=${proxy} \
     -t jsa1987/minidlna-yamaha-avr:$tag \
