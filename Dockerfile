@@ -34,7 +34,6 @@ RUN apt-get install gettext -y
 RUN apt-get install git -y
 RUN apt-get install wget -y
 RUN apt-get install build-essential -y
-#RUN apt-get install minidlna -y
 
 #RUN if [ "${USE_APT_PROXY}" = "Y" ]; then \
 #    echo "Removing apt proxy configuration ..."; \
@@ -53,12 +52,11 @@ WORKDIR /tmp/minidlna-git
 RUN cp upnpsoap.c upnpsoap.c_bk
 RUN rm upnpsoap.c
 COPY /app/upnpsoap.c /tmp/minidlna-git/upnpsoap.c
-#RUN wget https://github.com/JSa1987/miniDLNA-YamahaAVR-docker/blob/main/app/upnpsoap.c
 RUN ./autogen.sh
 RUN ./configure
 RUN make
 RUN make install
-#RUN checkinstall
+
 
 FROM scratch
 COPY --from=base / /
